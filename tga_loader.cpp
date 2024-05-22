@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdio>
+#include <utility>
 
 using namespace std;
 using ubyte = unsigned char;
@@ -7,6 +8,17 @@ using ubyte = unsigned char;
 constexpr int SIGNATURE_SIZE = 12;
 constexpr int ATTRIBUTES_SIZE = 6;
 constexpr int BITS_PER_BYTE = 8;
+
+bool BGRtoRGB(ubyte *&data, const unsigned int dataLength)
+{
+    constexpr int RGB_LENGTH = 3;
+
+    for (unsigned int i = 0; i < dataLength; i += RGB_LENGTH)
+    {
+        swap(data[i], data[i+2]);
+    }
+    return true;
+}
 
 bool loadTga(const char *filename, ubyte *&data, unsigned int &dataLength)
 {
