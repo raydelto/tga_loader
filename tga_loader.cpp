@@ -15,7 +15,7 @@ bool BGRtoRGB(ubyte *&data, const unsigned int dataLength)
 
     for (unsigned int i = 0; i < dataLength; i += RGB_LENGTH)
     {
-        swap(data[i], data[i+2]);
+        swap(data[i], data[i + 2]);
     }
     return true;
 }
@@ -81,6 +81,7 @@ int main()
 
     cout << "Empty project" << endl;
     loadTga("img/female.tga", data, dataLength);
+    BGRtoRGB(data, dataLength);
     free(data);
     cout << "exit" << endl;
     return 0;
