@@ -17,6 +17,17 @@ bool BGRtoRGB(ubyte *&data, const unsigned int dataLength)
     return true;
 }
 
+bool BGRtoBGRA(ubyte *&data, const unsigned int dataLength)
+{
+    constexpr int RGB_LENGTH = 3;
+
+    for (unsigned int i = 0; i < dataLength; i += RGB_LENGTH)
+    {
+        std::swap(data[i], data[i + 2]);
+    }
+    return true;
+}
+
 bool LoadTga(const char *filename, ubyte *&data, unsigned int &dataLength)
 {
     FILE *file = fopen(filename, "rb");

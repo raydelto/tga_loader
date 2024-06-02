@@ -5,6 +5,7 @@
 
 SDL_Window *window = nullptr;
 SDL_Surface *surface = nullptr;
+ubyte *data;
 
 bool InitSDL()
 {
@@ -14,6 +15,47 @@ bool InitSDL()
     return window && surface;
 }
 
+void LoadData(ubyte *myData)
+{
+
+    for (int i = 0; i < SCREEN_HEIGHT; i++)
+    {
+        for (int j = 0; j < SCREEN_WIDTH; j++)
+        {
+            unsigned char *color = new unsigned char[4];
+            color[0] = *myData;
+            myData++;
+            color[1] = *myData;
+            myData++;
+            color[2] = *myData;
+            myData++;
+            color[3] = 0;
+
+            unsigned int *iColor = (unsigned int *)color;
+            drawPixel(surface, j, i, *iColor);
+            // delete color;
+        }
+    }
+}
+void BufferTest()
+{
+    unsigned char *color = new unsigned char[4];
+    color[0] = 0;
+    color[1] = 0;
+    color[2] = 255;
+    color[3] = 255;
+
+    unsigned int *iColor = (unsigned int *)color;
+
+    for (int i = 0; i < SCREEN_HEIGHT; i++)
+    {
+        for (int j = 0; j < SCREEN_WIDTH; j++)
+        {
+            drawPixel(surface, j, i, *iColor);
+            // delete color;
+        }
+    }
+}
 bool Render()
 {
     bool quit = false;
@@ -43,7 +85,7 @@ bool Render()
 
         auto start = SDL_GetTicks();
 
-        // Do update
+        LoadData(data);
 
         auto end = SDL_GetTicks();
         SDL_UpdateWindowSurface(window);
@@ -56,16 +98,16 @@ bool Render()
 
 int main()
 {
-    ubyte *data;
     unsigned int dataLength;
 
     std::cout << "Execution started." << std::endl;
     LoadTga("img/female.tga", data, dataLength);
-    BGRtoRGB(data, dataLength);
+    // BGRtoRGB(data, dataLength);
     if (!InitSDL())
     {
         std::cerr << "Error while initializing SDL" << std::endl;
     }
+    // BufferTest();
     Render();
     free(data);
     std::cout << "Execution ended." << std::endl;

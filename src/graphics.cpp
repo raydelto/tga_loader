@@ -3,7 +3,7 @@
 #include <SDL2/SDL.h>
 #include "graphics.h"
 
-void drawPixel(SDL_Surface *surface, int x, int y, int color)
+void drawPixel(SDL_Surface *surface, int x, int y, unsigned int color)
 {
 	unsigned int offset = SCREEN_WIDTH * y + x;
 	if (offset > TOTAL_PIXELS)
