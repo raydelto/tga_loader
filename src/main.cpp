@@ -14,6 +14,46 @@ bool InitSDL()
     return window && surface;
 }
 
+bool Render()
+{
+    bool quit = false;
+    SDL_Event e;
+    while (!quit)
+    {
+        while (SDL_PollEvent(&e))
+        {
+            if (e.type == SDL_QUIT)
+            {
+                quit = true;
+            }
+
+            if (e.type == SDL_KEYDOWN)
+            {
+                switch (e.key.keysym.sym)
+                {
+                case SDLK_q:
+                    quit = true;
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
+        clearSreen(surface);
+
+        auto start = SDL_GetTicks();
+
+        // Do update
+
+        auto end = SDL_GetTicks();
+        SDL_UpdateWindowSurface(window);
+        SDL_Delay(16 - (start - end));
+    }
+
+    SDL_Quit();
+    return true;
+}
+
 int main()
 {
     ubyte *data;
@@ -22,6 +62,11 @@ int main()
     std::cout << "Execution started." << std::endl;
     LoadTga("img/female.tga", data, dataLength);
     BGRtoRGB(data, dataLength);
+    if (!InitSDL())
+    {
+        std::cerr << "Error while initializing SDL" << std::endl;
+    }
+    Render();
     free(data);
     std::cout << "Execution ended." << std::endl;
     return 0;

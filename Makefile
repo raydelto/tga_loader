@@ -1,6 +1,8 @@
-SRC=src/tga_loader.cpp
+SRC=src/tga_loader.cpp \
+	src/graphics.cpp
 
-OBJ=bin/tga_loader.o
+OBJ=bin/tga_loader.o \
+	bin/graphics.o
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
