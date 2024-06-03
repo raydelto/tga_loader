@@ -1,6 +1,7 @@
 #pragma once
 
-using ubyte = unsigned char;
+#include "types.h"
+
 
 bool BGRtoRGB(ubyte *&data, const unsigned int dataLength);
 bool BGRtoBGRA(ubyte *&data, const unsigned int dataLength);
