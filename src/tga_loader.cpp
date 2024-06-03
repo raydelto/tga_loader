@@ -52,11 +52,11 @@ bool LoadTga(const char *filename, ubyte *&data, unsigned int &dataLength)
 
     unsigned short width;
     unsigned short height;
-    ubyte bpp; // bytes per pixel
+    unsigned short bpp; // bytes per pixel
 
     fread(&width, 1, sizeof(short), file);
     fread(&height, 1, sizeof(short), file);
-    fread(&bpp, 1, sizeof(ubyte), file);
+    fread(&bpp, 1, sizeof(short), file);
 
     bpp /= BITS_PER_BYTE;
 
