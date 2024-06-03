@@ -33,7 +33,7 @@ void LoadData(ubyte *myData)
 
             unsigned int *iColor = (unsigned int *)color;
             drawPixel(surface, j, i, *iColor);
-            // delete color;
+            delete iColor;
         }
     }
 }
