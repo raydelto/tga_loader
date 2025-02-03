@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <utility>
 #include "tga_loader.h"
+#include <cstring>
 
 constexpr int SIGNATURE_SIZE = 12;
 constexpr int BITS_PER_BYTE = 8;
