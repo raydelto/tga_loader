@@ -1,5 +1,7 @@
 #include <iostream>
 #include "tga_loader.h"
+#define SDL_MAIN_HANDLED
+
 #include <SDL2/SDL.h>
 #include "graphics.h"
 
@@ -33,7 +35,7 @@ void LoadData(ubyte *myData)
 
             unsigned int *iColor = (unsigned int *)color;
             drawPixel(surface, j, i, *iColor);
-            delete iColor;
+            delete[] color;
         }
     }
 }
