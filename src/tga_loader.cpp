@@ -7,6 +7,17 @@
 constexpr int SIGNATURE_SIZE = 12;
 constexpr int BITS_PER_BYTE = 8;
 
+/*void flipHorizontally(ubyte *&data, unsigned int imageWidth, unsigned int imageHeight)
+{
+    constexpr int RGB_LENGTH = 3;
+
+    for (unsigned int i = 0; i < imageWidth; i += RGB_LENGTH)
+    {
+        std::swap(data[i], data[i + 2]);
+    }
+    
+}*/
+
 bool BGRtoRGB(ubyte *&data, const unsigned int dataLength)
 {
     constexpr int RGB_LENGTH = 3;

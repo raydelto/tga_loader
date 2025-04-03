@@ -1,12 +1,15 @@
 #include <iostream>
 #include "tga_loader.h"
+#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
+
 #include "graphics.h"
 
 SDL_Window *window = nullptr;
 SDL_Surface *surface = nullptr;
 ubyte *data;
 
+//prepare the window and initialize SDL
 bool InitSDL()
 {
     SDL_Init(SDL_INIT_VIDEO);
@@ -15,6 +18,7 @@ bool InitSDL()
     return window && surface;
 }
 
+//draw image on screen
 void LoadData(ubyte *myData)
 {
 
@@ -33,10 +37,13 @@ void LoadData(ubyte *myData)
 
             unsigned int *iColor = (unsigned int *)color;
             drawPixel(surface, j, i, *iColor);
-            delete iColor;
+            //delete[] iColor;
+            delete[] color;
         }
     }
 }
+
+//visual test by drawin the whole screen in blue.
 void BufferTest()
 {
     unsigned char *color = new unsigned char[4];
@@ -52,10 +59,12 @@ void BufferTest()
         for (int j = 0; j < SCREEN_WIDTH; j++)
         {
             drawPixel(surface, j, i, *iColor);
-            // delete color;
+            delete[] color;
         }
     }
 }
+
+//bool to manage the programs execution, events and image rendering
 bool Render()
 {
     bool quit = false;
@@ -96,6 +105,7 @@ bool Render()
     return true;
 }
 
+//general program flow
 int main()
 {
     unsigned int dataLength;
@@ -109,7 +119,7 @@ int main()
     }
     // BufferTest();
     Render();
-    free(data);
+    delete[] data;
     std::cout << "Execution ended." << std::endl;
     return 0;
 }
