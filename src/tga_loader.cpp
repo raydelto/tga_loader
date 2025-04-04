@@ -84,11 +84,11 @@ void FlipHorizontally(ubyte *&data, unsigned int width, unsigned int height, uns
     {
         for (unsigned int x = 0; x < width / 2; ++x)
         {
-            // Calcula las posiciones de los píxeles que se intercambiarán
+            // Calculates the positions of the pixels to be swapped
             ubyte* left = data + (y * width + x) * bpp;
             ubyte* right = data + (y * width + (width - 1 - x)) * bpp;
 
-            // Intercambia cada componente del píxel
+            // Swaps each component of the pixel
             for (unsigned int i = 0; i < bpp; ++i)
             {
                 std::swap(left[i], right[i]);

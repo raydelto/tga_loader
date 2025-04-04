@@ -13,7 +13,7 @@ SDL_Window *window = nullptr;
 SDL_Surface *surface = nullptr;
 ubyte *data;
 
-//prepare the window and initialize SDL
+// prepare the window and initialize SDL
 bool InitSDL()
 {
     SDL_Init(SDL_INIT_VIDEO);
@@ -22,7 +22,7 @@ bool InitSDL()
     return window && surface;
 }
 
-//draw image on screen
+// draw image on screen
 void LoadData(ubyte *myData)
 {
 
@@ -46,7 +46,7 @@ void LoadData(ubyte *myData)
     }
 }
 
-//visual test by drawin the whole screen in blue.
+// visual test by drawin the whole screen in blue.
 void BufferTest()
 {
     unsigned char *color = new unsigned char[4];
@@ -67,7 +67,7 @@ void BufferTest()
     }
 }
 
-//bool to manage the programs execution, events and image rendering
+// bool to manage the programs execution, events and image rendering
 bool Render()
 {
     bool quit = false;
@@ -108,7 +108,7 @@ bool Render()
     return true;
 }
 
-//general program flow
+// general program flow
 int main()
 {
     std::cout << "Execution started." << std::endl;
@@ -117,11 +117,6 @@ int main()
         std::cerr << "Error loading TGA image." << std::endl;
         return 1;
     }
-
-    //BGRtoRGB(data, dataLength);
-
-    // Flip the image
-    //FlipHorizontally(data, width, height, bpp);
 
     if (!InitSDL())
     {

@@ -4,7 +4,7 @@
 #include "graphics.h"
 
 
-//Dibuja el primer pixel y calcula la orientación de la imagen a partir de ese offset
+// Draws the first pixel and calculates the image orientation based on that offset
 void drawPixel(SDL_Surface *surface, int x, int y, unsigned int color)
 {
 	unsigned int offset = SCREEN_WIDTH * y + x;
@@ -18,7 +18,7 @@ void drawPixel(SDL_Surface *surface, int x, int y, unsigned int color)
 	pixels[offset] = color;
 }
 
-//Limpia la pantalla
+// Clears the screen
 void clearSreen(SDL_Surface *surface)
 {
 	unsigned int *pixels;
