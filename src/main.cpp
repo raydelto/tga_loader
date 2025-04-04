@@ -3,12 +3,17 @@
 #define SDL_MAIN_HANDLED
 
 #include <SDL2/SDL.h>
+
 #include "graphics.h"
+
+unsigned int dataLength;
+unsigned int width, height, bpp;
 
 SDL_Window *window = nullptr;
 SDL_Surface *surface = nullptr;
 ubyte *data;
 
+// prepare the window and initialize SDL
 bool InitSDL()
 {
     SDL_Init(SDL_INIT_VIDEO);
@@ -17,6 +22,7 @@ bool InitSDL()
     return window && surface;
 }
 
+// draw image on screen
 void LoadData(ubyte *myData)
 {
 
@@ -35,10 +41,12 @@ void LoadData(ubyte *myData)
 
             unsigned int *iColor = (unsigned int *)color;
             drawPixel(surface, j, i, *iColor);
-            delete[] color;
+            delete[] iColor;
         }
     }
 }
+
+// visual test by drawin the whole screen in blue.
 void BufferTest()
 {
     unsigned char *color = new unsigned char[4];
@@ -54,10 +62,12 @@ void BufferTest()
         for (int j = 0; j < SCREEN_WIDTH; j++)
         {
             drawPixel(surface, j, i, *iColor);
-            // delete color;
+            delete[] color;
         }
     }
 }
+
+// bool to manage the programs execution, events and image rendering
 bool Render()
 {
     bool quit = false;
@@ -98,20 +108,25 @@ bool Render()
     return true;
 }
 
+// general program flow
 int main()
 {
-    unsigned int dataLength;
-
     std::cout << "Execution started." << std::endl;
-    LoadTga("img/female.tga", data, dataLength);
-    // BGRtoRGB(data, dataLength);
+    if (!LoadTga("img/female.tga", data, dataLength, width, height, bpp))
+    {
+        std::cerr << "Error loading TGA image." << std::endl;
+        return 1;
+    }
+
     if (!InitSDL())
     {
         std::cerr << "Error while initializing SDL" << std::endl;
+        return 1;
     }
-    // BufferTest();
+
     Render();
     free(data);
+
     std::cout << "Execution ended." << std::endl;
     return 0;
 }

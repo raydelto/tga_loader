@@ -1,7 +1,9 @@
 CXX=g++
+CXXFLAGS := -Wall -std=c++17 -DSDL_MAIN_HANDLED $(shell sdl2-config --cflags)
+LDFLAGS := $(shell sdl2-config --libs)
 
 SRC=src/tga_loader.cpp \
-	src/graphics.cpp
+    src/graphics.cpp
 
 OBJ=tga_loader.o \
 	graphics.o
@@ -9,6 +11,7 @@ OBJ=tga_loader.o \
 LIBS=-lSDL2
 
 UNAME_S := $(shell uname -s)
+
 ifeq ($(UNAME_S),Linux)
 	LIBS += -L/usr/lib
 	INCLUDES = -I/usr/include
@@ -27,7 +30,6 @@ ifeq ($(OS),Windows_NT)
 endif
 
 WARNINGS=-Wall
-
 CPP_VERSION=-std=c++17
 
 all:
