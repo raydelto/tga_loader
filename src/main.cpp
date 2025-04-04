@@ -5,6 +5,9 @@
 
 #include "graphics.h"
 
+unsigned int dataLength;
+unsigned int width, height, bpp;
+
 SDL_Window *window = nullptr;
 SDL_Surface *surface = nullptr;
 ubyte *data;
@@ -108,19 +111,27 @@ bool Render()
 //general program flow
 int main()
 {
-    unsigned int dataLength;
-    
     std::cout << "Execution started." << std::endl;
-    LoadTga("img/female.tga", data, dataLength);
-    //FlipHorizontally(data, width, height, bpp);
-    // BGRtoRGB(data, dataLength);
+    if (!LoadTga("img/female.tga", data, dataLength, width, height, bpp))
+    {
+        std::cerr << "Error loading TGA image." << std::endl;
+        return 1;
+    }
+
+    //BGRtoRGB(data, dataLength);
+
+    // Flip the image
+    FlipHorizontally(data, width, height, bpp);
+
     if (!InitSDL())
     {
         std::cerr << "Error while initializing SDL" << std::endl;
+        return 1;
     }
-    // BufferTest();
+
     Render();
     free(data);
+
     std::cout << "Execution ended." << std::endl;
     return 0;
 }
