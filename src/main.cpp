@@ -121,7 +121,7 @@ int main()
     //BGRtoRGB(data, dataLength);
 
     // Flip the image
-    FlipHorizontally(data, width, height, bpp);
+    //FlipHorizontally(data, width, height, bpp);
 
     if (!InitSDL())
     {
