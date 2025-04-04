@@ -109,9 +109,10 @@ bool Render()
 int main()
 {
     unsigned int dataLength;
-
+    
     std::cout << "Execution started." << std::endl;
     LoadTga("img/female.tga", data, dataLength);
+    //FlipHorizontally(data, width, height, bpp);
     // BGRtoRGB(data, dataLength);
     if (!InitSDL())
     {
@@ -119,7 +120,7 @@ int main()
     }
     // BufferTest();
     Render();
-    delete[] data;
+    free(data);
     std::cout << "Execution ended." << std::endl;
     return 0;
 }
