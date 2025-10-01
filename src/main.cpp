@@ -11,31 +11,40 @@ ubyte *data;
 
 bool InitSDL()
 {
-    SDL_Init(SDL_INIT_VIDEO);
+    if (SDL_Init(SDL_INIT_VIDEO) != 0)
+    {
+        std::cerr << "SDL_Init Error: " << SDL_GetError() << std::endl;
+        return false;
+    }
     window = SDL_CreateWindow("Simple renderer", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    if (!window)
+    {
+        std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
+        return false;
+    }
     surface = SDL_GetWindowSurface(window);
-    return window && surface;
+    if (!surface)
+    {
+        std::cerr << "SDL_GetWindowSurface Error: " << SDL_GetError() << std::endl;
+        return false;
+    }
+    return true;
 }
 
 void LoadData(ubyte *myData)
 {
-
     for (int i = 0; i < SCREEN_HEIGHT; i++)
     {
         for (int j = 0; j < SCREEN_WIDTH; j++)
         {
-            unsigned char *color = new unsigned char[4];
-            color[0] = *myData;
-            myData++;
-            color[1] = *myData;
-            myData++;
-            color[2] = *myData;
-            myData++;
+            unsigned char color[4];
+            color[0] = *myData++;
+            color[1] = *myData++;
+            color[2] = *myData++;
             color[3] = 0;
 
             unsigned int *iColor = (unsigned int *)color;
             drawPixel(surface, j, i, *iColor);
-            delete[] color;
         }
     }
 }
@@ -91,7 +100,11 @@ bool Render()
 
         auto end = SDL_GetTicks();
         SDL_UpdateWindowSurface(window);
-        SDL_Delay(16 - (start - end));
+        auto elapsed = end - start;
+        if (elapsed < 16)
+        {
+            SDL_Delay(16 - elapsed);
+        }
     }
 
     SDL_Quit();
@@ -103,11 +116,17 @@ int main()
     unsigned int dataLength;
 
     std::cout << "Execution started." << std::endl;
-    LoadTga("img/female.tga", data, dataLength);
+    if (!LoadTga("img/female.tga", data, dataLength))
+    {
+        std::cerr << "Error loading TGA file" << std::endl;
+        return 1;
+    }
     // BGRtoRGB(data, dataLength);
     if (!InitSDL())
     {
         std::cerr << "Error while initializing SDL" << std::endl;
+        free(data);
+        return 1;
     }
     // BufferTest();
     Render();
